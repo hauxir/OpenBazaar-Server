@@ -1,0 +1,107 @@
+<html>
+  <body>
+    <h3>Profile</h3>    
+    <form action="http://localhost:18469/api/v1/update_profile" method="post" enctype="multipart/form-data" id="profile">
+        Name:<input type="text" name="name" /><br>
+  Location:<select name="location">
+     <option value="UNITED_STATES">United States</option>
+     <option value="UNITED_KINGDOM">United Kingdom</option>
+     <option value="AUSTRALIA">Australia</option>
+     <option value="MEXICO">Mexico</option>
+  </select><br>
+        handle:<input type="text" name="handle" /><br>
+        about:<input type="text" name="about" /><br>
+        short description:<input type="text" name="short_description" /><br>
+        website:<input type="text" name="website" /><br>
+        email:<input type="text" name="email" /><br>
+        Avatar<input type="file" name="avatar"><br>
+        Header<input type="file" name="header"><br>
+        <input type="submit" value="Upload" />
+    </form>
+    <br><br>
+    <form action="http://localhost:18469/api/v1/update_profile" method="post" enctype="multipart/form-data">
+    <textarea name="pgp_key">Enter pgp key here</textarea><br>
+    <textarea name="signature">Enter signature coverting the guid</textarea><br>
+    <input type="submit" value="Upload" />
+    </form>
+    <br><br>
+    <form action="http://bitcoinauthenticator.org:18469/api/v1/social_accounts" method="post" enctype="multipart/form-data">
+      Account Type:<select name='account_type' >
+        <option value="FACEBOOK">Facebook</option>
+        <option value="TWITTER">Twitter</option>
+        <option value="INSTAGRAM">Instagram</option>
+      </select><br>
+      Username:<input type='text' name='username' ><br>
+      Proof URL:<input type='text' name='proof' >
+        <input type="submit" value="Upload" />
+    </form>
+    <h3>Contract</h3>   
+        <form action="http://localhost:18469/api/v1/set_contract" method="post" enctype="multipart/form-data" id="contract">
+  Type:<select name="metadata_category">
+     <option value="physical good">Physical Good</option>
+     <option value="digital good">Digital Good</option>
+     <option value="service">Service</option>
+  </select><br>
+        Title:<input type="text" name="title" /><br>
+        Description:<input type="text" name="description" /><br>
+        Expiration Date:<input type="datetime-local" name="expiration_date"><br>
+        Price:<input type="text" name="price" /><br>
+        <input type="radio" name="currency_code" value="btc" checked>BTC
+        <br>
+        <input type="radio" name="currency_code" value="usd">USD<br>
+        <input type="checkbox" name="nsfw" checked="checked"> NSFW<br>
+        Processing Time:<input type="text" name="process_time" /><br>
+        Estimated Delivery Domestic:<input type="text" name="est_delivery_domestic" /><br>
+        Estimated Delivery International:<input type="text" name="est_delivery_international" /><br>
+        Category:<input type="text" name="category" /><br>
+        Condition:<input type="text" name="condition" /><br>
+        SKU:<input type="text" name="sku" /><br>
+        Terms & Conditions:<input type="text" name="terms_conditions" /><br>
+        Return Policy:<input type="text" name="returns" /><br>
+        <input type="checkbox" name="free_shipping" checked="checked"> Free Shipping<br>
+        Shipping Currency:<br>
+        <input type="radio" name="shipping_currency_code" value="btc" checked>BTC
+        <br>
+        <input type="radio" name="shipping_currency_code" value="usd">USD<br>
+        Shipping Domestic:<input type="text" name="shipping_domestic" /><br>
+        Shipping International:<input type="text" name="shipping_international" /><br>
+        Shipping Origin:<select name="shipping_origin">
+             <option value="UNITED_STATES">United States</option>
+             <option value="UNITED_KINGDOM">United Kingdom</option>
+             <option value="AUSTRALIA">Australia</option>
+             <option value="MEXICO">Mexico</option>
+        </select><br>
+        Ships To:<select name="ships_to">
+             <option value="UNITED_STATES">United States</option>
+             <option value="UNITED_KINGDOM">United Kingdom</option>
+             <option value="AUSTRALIA">Australia</option>
+             <option value="MEXICO">Mexico</option>
+        </select><br>
+        Keyword:<input type="text" name="keywords" /><br>
+        Moderator:<input type="text" name="moderators" /><br>
+
+
+        Image<input type="file" name="images" multiple><br>
+        <input type="submit" value="Upload" />
+    </form>
+        <br><br>
+        <h3>Purchase</h3>       
+    <form action="http://localhost:18469/api/v1/purchase_contract" method="post" enctype="multipart/form-data" id="profile">
+        Contract ID:<input type="text" name="id" /><br>
+        Quantity:<input type="text" name="quantity" /><br>
+        Name:<input type="text" name="ship_to" /><br>
+        Address:<input type="text" name="address" /><br>
+        City:<input type="text" name="city" /><br>
+        State:<input type="text" name="state" /><br>
+        Postal Code:<input type="text" name="postal_code" /><br>
+  Country:<select name="country">
+     <option value="UNITED_STATES">United States</option>
+     <option value="UNITED_KINGDOM">United Kingdom</option>
+     <option value="AUSTRALIA">Australia</option>
+     <option value="MEXICO">Mexico</option>
+  </select><br>
+        Moderator:<input type="text" name="moderator" /><br>
+<input type="submit" value="Upload" />
+    </form>
+  </body>
+</html>
