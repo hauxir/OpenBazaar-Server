@@ -1,4 +1,5 @@
 __author__ = 'chris'
+import backupTool
 import json
 import os
 from txrestapi.resource import APIResource
@@ -470,3 +471,15 @@ class OpenBazaarAPI(APIResource):
         seller_guid = unhexlify(c.contract["vendor_offer"]["listing"]["id"]["guid"])
         self.kserver.resolve(seller_guid).addCallback(get_node)
         return server.NOT_DONE_YET
+
+    @POST('^/api/v1/backup')
+    def backup(self, request):
+        tablesAndColumns = request.args["tablesAndColumns"][0]
+        output = request.args["output"][0]
+        return backupTool.backup(tablesAndColumns, output)
+
+    @POST('^/api/v1/restore')
+    def restore(self, request):
+        input = request.args["input"][0]
+        deleteTableDataFirst = request.args["deleteTableDataFirst"][0]
+        return backupTool.restore(input, deleteTableDataFirst)

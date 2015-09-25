@@ -9,21 +9,21 @@ import sqlite3 as lite
 import tarfile
 import time
 
-TABLES = [
-	('hashmap', ['hash', 'filepath']),
-	('profile', ['id', 'serializedUserInfo']),
-	('listings', ['id', 'serializedListings']),
-	('keys', ['type', 'privkey', 'pubkey']),
-	('followers', ['id', 'serializedFollowers']),
-	('following', ['id', 'serializedFollowing']),
-	('messages', ['guid', 'handle', 'signed_pubkey', 'encryption_pubkey', 'subject', 'message_type', 'message', 'timestamp', 'avatar_hash', 'signature', 'outgoing']),
-	('notifications', ['guid', 'handle', 'message', 'timestamp', 'avatar_hash']),
-	('vendors', ['guid', 'ip', 'port', 'signedPubkey']),
-	('moderators', ['guid', 'signedPubkey', 'encryptionKey', 'encryptionSignature', 'bitcoinKey', 'bitcoinSignature', 'handle']),
-	('purchases', ['id', 'title', 'timestamp', 'btc', 'address', 'status', 'thumbnail', 'seller', 'proofSig']),
-	('sales', ['id', 'title', 'timestamp', 'btc', 'address', 'status', 'thumbnail', 'seller']),
-	('dht', ['keyword', 'id', 'value', 'birthday'])
-]
+TABLES = {
+	'hashmap': ['hash', 'filepath'],
+	'profile': ['id', 'serializedUserInfo'],
+	'listings': ['id', 'serializedListings'],
+	'keys': ['type', 'privkey', 'pubkey'],
+	'followers': ['id', 'serializedFollowers'],
+	'following': ['id', 'serializedFollowing'],
+	'messages': ['guid', 'handle', 'signed_pubkey', 'encryption_pubkey', 'subject', 'message_type', 'message', 'timestamp', 'avatar_hash', 'signature', 'outgoing'],
+	'notifications': ['guid', 'handle', 'message', 'timestamp', 'avatar_hash'],
+	'vendors': ['guid', 'ip', 'port', 'signedPubkey'],
+	'moderators': ['guid', 'signedPubkey', 'encryptionKey', 'encryptionSignature', 'bitcoinKey', 'bitcoinSignature', 'handle'],
+	'purchases': ['id', 'title', 'timestamp', 'btc', 'address', 'status', 'thumbnail', 'seller', 'proofSig'],
+	'sales': ['id', 'title', 'timestamp', 'btc', 'address', 'status', 'thumbnail', 'seller'],
+	'dht': ['keyword', 'id', 'value', 'birthday']
+}
 
 def _getDatabase():
 	Database = db.Database()
@@ -48,15 +48,25 @@ def _exportDatabaseToCsv(tablesAndColumns):
 				writer.writerows(data)
 	return result
 
-def backup(tablesAndColumns=None, output=None):
+def backup(tableList=None, output=None):
 	"""Archives given tables and files in a single tar archive."""
 	os.chdir(DATA_FOLDER)
 
-	# Remove existing database files and re-make them
-	if os.path.exists('backup'):
-		shutil.rmtree('backup')
-	os.makedirs('backup')
-	_exportDatabaseToCsv(tablesAndColumns)
+	if tableList:
+		# Parse table list
+		tableList = tableList.replace(' ', '').split(',')
+		tablesAndColumns = []
+		for table in tableList:
+			if table in TABLES:
+				tablesAndColumns.append((table, TABLES[table]))
+			else:
+				return 'ERROR, Table not found: {0}'.format(table)
+
+		# Remove existing database files and re-make them
+		if os.path.exists('backup'):
+			shutil.rmtree('backup')
+		os.makedirs('backup')
+		_exportDatabaseToCsv(tablesAndColumns)
 
 	# Archive files
 	files = os.listdir(DATA_FOLDER)
@@ -66,6 +76,7 @@ def backup(tablesAndColumns=None, output=None):
 		for f in files:
 			tar.add(f)
 		tar.close()
+	return 'Success'
 
 def _importCsvToTable(fileName, deleteDataFirst=False):
 	"""Imports given CSV file to the database."""
@@ -92,6 +103,8 @@ def _importCsvToTable(fileName, deleteDataFirst=False):
 
 def restore(input, deleteTableDataFirst=False):
 	"""Restores files and tables of given archive."""
+	if not input:
+		return 'Input path is needed'
 	os.chdir(DATA_FOLDER)
 
 	# Remove existing database files if any
@@ -107,6 +120,8 @@ def restore(input, deleteTableDataFirst=False):
 		files = ['backup/{0}'.format(f) for f in os.listdir('backup')]
 		for f in files:
 			_importCsvToTable(f, deleteTableDataFirst)
+
+	return 'Success'
 
 if __name__ == '__main__':
 	print 'Backup tool works as a library.'
