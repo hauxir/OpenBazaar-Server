@@ -1,3 +1,4 @@
+__author__ = 'marc'
 import csv
 import db.datastore as db
 import os
@@ -87,8 +88,6 @@ def _importCsvToTable(fileName, deleteDataFirst=False):
                     rowlen = len(row)
                 else:
                     if len(row) == rowlen:
-                        print 'Insert into {0}: {1}'.format(tableName, row)
-                        print insertsql
                         cursor.execute(insertsql, row)
 
 
