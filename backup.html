@@ -1,0 +1,35 @@
+<html>
+<body>
+<u>Underscored fields are required</u><br />
+Example data is provided below each input<br />
+<br />
+<b>Backup</b><br />
+<br />
+<form action="http://localhost:18469/api/v1/backup/" method="post">
+List of tables to backup (comma separated):<br />
+<input type="text" name="tablesAndColumns"><br>
+hashmap, profile, listings<br />
+<br />
+Name of file to create (don't forget to add .tar.gz), leave empty for todays date:<br />
+<input type="text" name="output"><br>
+myveryspecialbackup.tar.gz<br />
+<br />
+<input type="submit" value="Backup" />
+</form>
+<br />
+<br />
+<b>Restore</b><br />
+<br />
+<form action="http://localhost:18469/api/v1/restore/" method="post">
+<u>Input file</u>:<br />
+<input type="text" name="input"><br>
+myveryspecialbackup.tar.gz<br />
+<br />
+Boolean, if data should be removed in the table before input:<br />
+<input type="text" name="deleteTableDataFirst"><br>
+True for delete, False or empty for append<br />
+<br />
+<input type="submit" value="Restore" />
+
+</body>
+</html> 
