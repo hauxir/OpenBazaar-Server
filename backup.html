@@ -3,33 +3,44 @@
 <u>Underscored fields are required</u><br />
 Example data is provided below each input<br />
 <br />
-<b>Backup</b><br />
-<br />
-<form action="http://localhost:18469/api/v1/backup/" method="post">
-List of tables to backup (comma separated):<br />
-<input type="text" name="tablesAndColumns"><br>
-hashmap, profile, listings<br />
-<br />
+
+<b>Backup files</b><br /><br />
+<form action="http://localhost:18469/api/v1/backup_files/" method="post">
 Name of file to create (don't forget to add .tar.gz), leave empty for todays date:<br />
-<input type="text" name="output"><br>
-myveryspecialbackup.tar.gz<br />
-<br />
-<input type="submit" value="Backup" />
-</form>
-<br />
-<br />
-<b>Restore</b><br />
-<br />
-<form action="http://localhost:18469/api/v1/restore/" method="post">
+<input type="text" name="output"><br />
+myveryspecialbackup.tar.gz<br /><br />
+<input type="submit" value="Backup files" />
+</form><br /><br />
+
+<b>Export database</b><br /><br />
+<form action="http://localhost:18469/api/v1/export_database/" method="post">
+List of tables to backup (comma separated):<br />
+<input type="text" name="tables_and_columns"><br />
+hashmap, profile, listings<br /><br />
+If previous table files should be removed before export:<br />
+<input type="text" name="remove_previous"><br />
+True / False (default)<br /><br />
+<input type="submit" value="Export database" />
+</form><br /><br />
+
+<b>Restore Files</b><br /><br />
+<form action="http://localhost:18469/api/v1/restore_files/" method="post">
 <u>Input file</u>:<br />
 <input type="text" name="input"><br>
-myveryspecialbackup.tar.gz<br />
-<br />
-Boolean, if data should be removed in the table before input:<br />
-<input type="text" name="deleteTableDataFirst"><br>
-True for delete, False or empty for append<br />
-<br />
+myveryspecialbackup.tar.gz<br /><br />
+If data should be removed in the table before input:<br />
+<input type="text" name="remove_previous_database_files"><br>
+True / False (default)<br /><br />
 <input type="submit" value="Restore" />
+</form><br /><br />
+
+<b>Import database</b><br /><br />
+<form action="http://localhost:18469/api/v1/import_database/" method="post">
+If previous table files should be removed before import:<br />
+<input type="text" name="remove_previous"><br />
+True / False (default)<br /><br />
+<input type="submit" value="Import database" />
+</form><br /><br />
 
 </body>
 </html> 

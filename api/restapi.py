@@ -472,14 +472,24 @@ class OpenBazaarAPI(APIResource):
         self.kserver.resolve(seller_guid).addCallback(get_node)
         return server.NOT_DONE_YET
 
-    @POST('^/api/v1/backup')
-    def backup(self, request):
-        tablesAndColumns = request.args["tablesAndColumns"][0]
+    @POST('^/api/v1/backup_files')
+    def backup_files(self, request):
         output = request.args["output"][0]
-        return backupTool.backup(tablesAndColumns, output)
+        return backupTool.backupFiles(output)
 
-    @POST('^/api/v1/restore')
-    def restore(self, request):
+    @POST('^/api/v1/export_database')
+    def export_database(self, request):
+        tables_and_columns = request.args["tables_and_columns"][0]
+        remove_previous = request.args["remove_previous"][0]
+        return backupTool.exportDatabase(tables_and_columns, remove_previous)
+
+    @POST('^/api/v1/restore_files')
+    def restore_files(self, request):
         input = request.args["input"][0]
-        deleteTableDataFirst = request.args["deleteTableDataFirst"][0]
-        return backupTool.restore(input, deleteTableDataFirst)
+        remove_previous_database_files = request.args["remove_previous_database_files"][0]
+        return backupTool.restoreFiles(input, remove_previous_database_files)
+
+    @POST('^/api/v1/import_database')
+    def import_database(self, request):
+        remove_previous = request.args["remove_previous"][0]
+        return backupTool.importDatabase(remove_previous)
