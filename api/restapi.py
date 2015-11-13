@@ -807,5 +807,3 @@ class OpenBazaarAPI(APIResource):
         """Restores files of given archive to OpenBazaar folder."""
         input_file = request.args["input_file"][0]
         return db.backuptool.restorefiles(input_file)
-
-
