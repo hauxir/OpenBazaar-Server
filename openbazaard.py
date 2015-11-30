@@ -30,6 +30,8 @@ from log import Logger, FileLogObserver
 from net.upnp import PortMapper
 from net.sslcontext import ChainedOpenSSLContextFactory
 
+from api import tor
+
 
 def run(*args):
     TESTNET = args[0]
@@ -151,6 +153,10 @@ def run(*args):
         reactor.listenSSL(18469, site, ChainedOpenSSLContextFactory(SSL_KEY, SSL_CERT), interface=rest_interface)
     else:
         reactor.listenTCP(18469, site, interface=rest_interface)
+
+    # tor
+    hostname = tor.startTor()
+    logger.info("Tor connected. Hostname: %s" % hostname)
 
     # blockchain
     # TODO: listen on the libbitcoin heartbeat port instead fetching height
